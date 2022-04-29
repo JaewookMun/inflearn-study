@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/jpashop
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+#        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100 # in-query의 개수를 몇 개로 할 것인지. (query parameter)
+    open-in-view: false
+# 설정하는 방법은 manual을 참고해야함. - spring boot document 참고
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace # 로그에서 보여지는 쿼리의 파라미터(?)에 뭐가 들어가는 지로그로 보여줌.
+    # 쿼리에 파라미터가 완전히 들어간것을 보려면 외부라이브러리를 가져와야함.
+
+# http://192.168.0.5:8082/login.jsp?jsessionid=cfa9a2c3da3c23f84cb647fd4555f66d

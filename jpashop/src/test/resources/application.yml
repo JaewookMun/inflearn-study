@@ -1,0 +1,22 @@
+
+spring:
+#  datasource:
+#    url: jdbc:h2:mem:test
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+
+# spring boot는 별도의 설정을 안해주면 in-memory database를 자동으로 사용한다.
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace

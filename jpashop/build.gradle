@@ -1,0 +1,83 @@
+//querydsl 추가
+buildscript {
+	dependencies {
+		classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10"
+	}
+}
+
+plugins {
+	id 'org.springframework.boot' version '2.6.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
+
+group = 'com.jpabook'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-devtools'
+	// 기본적으로 버전을 적어줘야하지만 스프링 부트는 해당 버전과 적합한 버전의 라이브러리를 자동으로 가져와준다.
+	// 이러한 연관정보가 없다면 아래 라이브러리처럼 버전을 적어줘야 한다.
+	// devtools 를 연동하면 재부트없이 리컴파일만 해주면 페이지 변경사항을 확인가능 Ctrl + F9
+
+	// 라이브러리를 가져올 때 왠만해서는 버전을 빼도 상관 없다
+	// - 스프링 부트는 자신에게 적합한 라이브러리의 버전을 가지고 있다.
+	// boot에 적합한 버전을 관리해준다.
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
+
+	implementation 'junit:junit:4.13.1'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//추가
+	testImplementation("org.junit.vintage:junit-vintage-engine") {
+		exclude group: "org.hamcrest", module: "hamcrest-core"
+	}
+
+	implementation 'com.querydsl:querydsl-jpa'
+	implementation 'com.querydsl:querydsl-apt'
+}
+
+//querydsl 추가
+def querydslDir = 'src/main/generated'
+//def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	library = "com.querydsl:querydsl-apt"
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', querydslDir]
+		}
+	}
+}
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
