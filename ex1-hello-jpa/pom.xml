@@ -21,6 +21,13 @@
             <artifactId>h2</artifactId>
             <version>1.4.200</version> <!-- 다운로드 받은 H2 DB와 버전을 일치시킨다. -->
         </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
     </dependencies>
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
