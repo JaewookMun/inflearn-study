@@ -1,4 +1,6 @@
-package hellojpa;
+package hellojpa.main;
+
+import hellojpa.Member;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,9 +20,9 @@ public class JpaEntityMain {
         try {
 //
 //            // 비영속
-//            Member member = new Member();
+            Member member = new Member();
 //            member.setId(101L);
-//            member.setName("HelloJPA");
+//            member.setUsername("HelloJPA");
 //
 //            // 영속
 //            System.out.println("=== BEFORE ===");
