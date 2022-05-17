@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
-public class Order {
+public class Order extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "ORDER_ID")
@@ -16,15 +16,15 @@ public class Order {
 //    @Column(name = "MEMBER_ID")
 //    private Long memberId;  //관계형 DB에 맞추어 한 설계
 
-    @ManyToOne //나를 주문한 회원은 하나
+    @ManyToOne(fetch = FetchType.LAZY) //나를 주문한 회원은 하나
     @JoinColumn(name = "MEMBER_ID") //가급적 단방향 연관관계가 바람직하다.
     private Member member;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;

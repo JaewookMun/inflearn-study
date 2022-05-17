@@ -18,7 +18,7 @@ public class Member extends BaseEntity {
     private String username;
 
     // 1.엔티티간의 관계와 2.join하는 컬럼을 서술
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER) //proxy 타입으로 조회
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
@@ -28,6 +28,11 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member")
     private List<MemberProduct> memberProducts = new ArrayList<>();
+
+    public void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
+    }
 
     public Long getId() {
         return id;
@@ -53,9 +58,19 @@ public class Member extends BaseEntity {
         this.team = team;
     }
 
-    public void changeTeam(Team team) {
-        this.team = team;
-        team.getMembers().add(this);
+    public Locker getLocker() {
+        return locker;
     }
 
+    public void setLocker(Locker locker) {
+        this.locker = locker;
+    }
+
+    public List<MemberProduct> getMemberProducts() {
+        return memberProducts;
+    }
+
+    public void setMemberProducts(List<MemberProduct> memberProducts) {
+        this.memberProducts = memberProducts;
+    }
 }
